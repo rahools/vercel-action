@@ -58,6 +58,10 @@ inputs:
     required: false
     description: 'You can assign a domain to this deployment. Please note that this domain must have been configured in the project. You can use pull request number via `{{PR_NUMBER}}` and branch via `{{BRANCH}}`'
     default: ''
+  package-manager:
+    required: false
+    description: 'The package manager to use. Default is `npm`'
+    default: 'npm'
 
 outputs:
   preview-url:

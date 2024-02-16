@@ -54,6 +54,7 @@ This action make a Vercel deployment with github actions.
 | alias-domains       | <ul><li>- [ ] </li></ol> |         | You can assign a domain to this deployment. Please note that this domain must have been configured in the project. You can use pull request number via `{{PR_NUMBER}}` and branch via `{{BRANCH}}`.         
 | vercel-project-name | <ul><li>- [ ] </li></ol> |         | The name of the project; if absent we'll use the `vercel inspect` command to determine. [#27](https://github.com/amondnet/vercel-action/issues/27) & [#28](https://github.com/amondnet/vercel-action/issues/28)
 | vercel-version      | <ul><li>- [x] </li></ol> |         | vercel-cli package version if absent we will use one declared in [package.json](https://github.com/amondnet/vercel-action/blob/master/package.json)
+| package-manager     | <ul><li>- [ ] </li></ol> |   npm   | package manager to run vercel-scripts. npm or yarn or pnpm. default is npm. Make sure you have installed "vercel" package in your project.
 ## Outputs
 
 ### `preview-url`

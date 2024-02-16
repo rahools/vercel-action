@@ -55,6 +55,15 @@ function retry(fn, retries) {
   return attempt(1);
 }
 
+// package manager to use, default to npm
+const packageManager = core.getInput('package-manager') || 'npm';
+const packageManagerRunMapper = {
+  npm: 'npx',
+  pnpm: 'pnpx',
+  yarn: 'yarn',
+};
+const packageManagerRun = packageManagerRunMapper[packageManager];
+
 // Vercel
 function getVercelBin() {
   const input = core.getInput('vercel-version');
@@ -188,7 +197,7 @@ async function vercelDeploy(ref, commit) {
     args.push('--scope', vercelScope);
   }
 
-  await exec.exec('npx', [vercelBin, ...args], options);
+  await exec.exec(packageManagerRun, [vercelBin, ...args], options);
 
   return myOutput;
 }
@@ -219,7 +228,7 @@ async function vercelInspect(deploymentUrl) {
     core.info('using scope');
     args.push('--scope', vercelScope);
   }
-  await exec.exec('npx', args, options);
+  await exec.exec(packageManagerRun, args, options);
 
   const match = myError.match(/^\s+name\s+(.+)$/m);
   return match && match.length ? match[1] : null;
@@ -380,7 +389,7 @@ async function aliasDomainsToDeployment(deploymentUrl) {
   const promises = aliasDomains.map(domain =>
     retry(
       () =>
-        exec.exec('npx', [vercelBin, ...args, 'alias', deploymentUrl, domain]),
+        exec.exec(packageManagerRun, [vercelBin, ...args, 'alias', deploymentUrl, domain]),
       2,
     ),
   );
